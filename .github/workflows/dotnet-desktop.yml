@@ -19,8 +19,9 @@ jobs:
           dotnet-version: 8.0.x
 
       - name: Restore dependencies
-        run: cd D:\a\APinI\APinI
-        run: dotnet restore
+        run: |
+          cd D:\a\APinI\APinI
+          dotnet restore
 
       - name: Build the project
-        run: dotnet build APinI
+        run: dotnet build D:\a\APinI\APinI\APinI\APinI.csproj

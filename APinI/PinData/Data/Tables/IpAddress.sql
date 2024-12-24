@@ -1,0 +1,6 @@
+﻿CREATE TABLE [dbo].[IpAddress]
+(
+	[Id] INT NOT NULL PRIMARY KEY IDENTITY,
+	[LastIpAddress] NVARCHAR(50) NOT NULL DEFAULT '',
+	[CreatedOn] DATETIME NOT NULL
+)

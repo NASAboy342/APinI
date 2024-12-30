@@ -20,7 +20,7 @@ jobs:
 
       - name: Restore dependencies
         run: |
-          cd D:\a\APinI\APinI
+          cd D:\a\APinI\APinI\APinI
           dotnet restore
 
       - name: Build the project

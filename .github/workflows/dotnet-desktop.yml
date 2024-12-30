@@ -24,4 +24,4 @@ jobs:
           dotnet restore
 
       - name: Build the project
-        run: dotnet build D:\a\APinI\APinI\APinI\APinI.csproj
+        run: dotnet build D:\a\APinI\APinI\APinI\APinI\APinI.csproj

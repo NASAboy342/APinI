@@ -13,6 +13,7 @@ builder.Services.AddRazorPages();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddSingleton<ICicdService, CicdService>();
+builder.Services.AddSingleton<IPowerShellService, PowerShellService>();
 builder.Services.AddSingleton<UpdateLocalWebsiteIpAddress>();
 builder.Services.AddHostedService<UpdateLocalWebsiteIpAddress>();
 builder.Services.AddSingleton<IHttpClientService, HttpClientService>();

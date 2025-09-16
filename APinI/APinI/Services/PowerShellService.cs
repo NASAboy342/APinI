@@ -55,5 +55,13 @@ namespace APinI.Services
                 }
             });
         }
+
+        public void ValidateScript(string script)
+        {
+            if (string.IsNullOrWhiteSpace(script))
+            {
+                throw new ArgumentException("Script cannot be null or empty.");
+            }
+        }
     }
 }

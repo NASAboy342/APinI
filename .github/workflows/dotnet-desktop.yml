@@ -1,27 +1,46 @@
-name: Build
+name: Deploy
 
 on:
   push:
-    branches:
-      - main
+    branches: [ main ]
+
+env:
+  repositoryDir: D:\Clones\APinI
+  projectDir: D:\Clones\APinI\APinI\APinI
+  destinationDir: D:\Websites\ApinI
+  publishDir: D:\Clones\APinI\APinI\APinI\bin\Release\net7.0
 
 jobs:
-  build:
-    runs-on: windows-latest
-
+  test-runner:
+    runs-on: self-hosted  # This will use your self-hosted runner
+    
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
+    - name: Pull Repository
+      shell: powershell
+      run: |
+        Write-Host "Going to repository directory..."
+        cd "${{ env.repositoryDir }}"
+        Write-Host "Current directory: $(Get-Location)"
+        Write-Host "Pulling latest code..."
+        git pull origin main
 
-      - name: Install .NET Core SDK
-        uses: actions/setup-dotnet@v2
-        with:
-          dotnet-version: 8.0.x
+    - name: Build
+      shell: powershell
+      run: |
+        Write-Host "Going to project directory..."
+        cd "${{ env.projectDir }}"
+        Write-Host "Building"
+        dotnet build
+      
 
-      - name: Restore dependencies
-        run: |
-          cd D:\a\APinI\APinI\APinI
-          dotnet restore
-
-      - name: Build the project
-        run: dotnet build D:\a\APinI\APinI\APinI\APinI\APinI.csproj
+    - name: Deploy Application
+      shell: powershell
+      run: |
+        Write-Host "Going to project directory..."
+        cd "${{ env.projectDir }}"
+        Write-Host "Current directory: $(Get-Location)"
+        Write-Host "Publish application..."
+        dotnet publish
+        Write-Host "Publish completed successfully!"
+        Write-Host "Ready to copy build to deployment directory..."
+        Copy-Item -Path "${{ env.publishDir }}/*" -Destination "${{ env.destinationDir }}" -Recurse -Force

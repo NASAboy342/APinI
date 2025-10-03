@@ -18,20 +18,20 @@ namespace APinI.Controllers
             _powerShellService = powerShellService;
         }
 
-        [HttpGet("release-earth-fe")]
-        public async Task<string> Deploy(string scriptFilePath)
-        {
-            try
-            {
-                var script = System.IO.File.ReadAllText(scriptFilePath);
-                _powerShellService.ValidateScript(script);
-                var request = new PowerShellRequest { Script = script };
-                return await _powerShellService.RunPowerShellScript(request);
-            }
-            catch (Exception ex)
-            {
-                return $"Error: {ex}";
-            }
-        }
+        // [HttpGet("release-earth-fe")]
+        // public async Task<string> Deploy(string scriptFilePath)
+        // {
+        //     try
+        //     {
+        //         var script = System.IO.File.ReadAllText(scriptFilePath);
+        //         _powerShellService.ValidateScript(script);
+        //         var request = new PowerShellRequest { Script = script };
+        //         return await _powerShellService.RunPowerShellScript(request);
+        //     }
+        //     catch (Exception ex)
+        //     {
+        //         return $"Error: {ex}";
+        //     }
+        // }
     }
 }

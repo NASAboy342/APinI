@@ -2,6 +2,7 @@ using APinI.BE;
 using APinI.Schedular;
 using APinI.Schedular.Jobs;
 using APinI.Services;
+using Microsoft.Extensions.FileProviders;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +13,17 @@ builder.Services.AddControllers();
 builder.Services.AddRazorPages();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+// Configure file upload size limits
+builder.Services.Configure<IISServerOptions>(options =>
+{
+    options.MaxRequestBodySize = 50 * 1024 * 1024; // 50MB
+});
+
+builder.WebHost.ConfigureKestrel(options =>
+{
+    options.Limits.MaxRequestBodySize = 50 * 1024 * 1024; // 50MB
+});
 builder.Services.AddSingleton<ICicdService, CicdService>();
 builder.Services.AddSingleton<IPowerShellService, PowerShellService>();
 builder.Services.AddSingleton<UpdateLocalWebsiteIpAddress>();
@@ -41,6 +53,22 @@ new DeviceSecheduler().Run();
     app.UseSwaggerUI();
 
 app.UseHttpsRedirection();
+
+// Enable default static file serving from wwwroot
+app.UseStaticFiles();
+
+// Enable static file serving from uploads directory
+var uploadsPath = Path.Combine(app.Environment.ContentRootPath, "uploads");
+if (!Directory.Exists(uploadsPath))
+{
+    Directory.CreateDirectory(uploadsPath);
+}
+
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new Microsoft.Extensions.FileProviders.PhysicalFileProvider(uploadsPath),
+    RequestPath = "/uploads"
+});
 
 app.UseAuthorization();
 app.UseCors(MyAllowSpecificOrigins);

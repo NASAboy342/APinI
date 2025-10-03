@@ -12,10 +12,15 @@ public class FileController : ControllerBase
     private readonly IWebHostEnvironment _webHostEnvironment;
     private readonly string _uploadsPath;
 
-    public FileController(IWebHostEnvironment webHostEnvironment)
+    public FileController(IWebHostEnvironment webHostEnvironment, IConfiguration configuration)
     {
         _webHostEnvironment = webHostEnvironment;
-        _uploadsPath = Path.Combine(_webHostEnvironment.ContentRootPath, "uploads");
+        
+        // Use external uploads path from configuration or default to a persistent location
+        var uploadsBasePath = configuration["FileUpload:BasePath"] ?? 
+                             Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
+        
+        _uploadsPath = Path.Combine(uploadsBasePath, "APinI_Uploads");
         
         // Ensure uploads directory exists
         if (!Directory.Exists(_uploadsPath))

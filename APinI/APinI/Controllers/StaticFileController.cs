@@ -10,10 +10,15 @@ public class StaticFileController : ControllerBase
     private readonly IWebHostEnvironment _webHostEnvironment;
     private readonly string _uploadsPath;
 
-    public StaticFileController(IWebHostEnvironment webHostEnvironment)
+    public StaticFileController(IWebHostEnvironment webHostEnvironment, IConfiguration configuration)
     {
         _webHostEnvironment = webHostEnvironment;
-        _uploadsPath = Path.Combine(_webHostEnvironment.ContentRootPath, "uploads");
+        
+        // Use external uploads path from configuration or default to a persistent location
+        var uploadsBasePath = configuration["FileUpload:BasePath"] ?? 
+                             Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
+        
+        _uploadsPath = Path.Combine(uploadsBasePath, "APinI_Uploads");
     }
 
     [HttpGet("files/{*filePath}")]

@@ -57,8 +57,11 @@ app.UseHttpsRedirection();
 // Enable default static file serving from wwwroot
 app.UseStaticFiles();
 
-// Enable static file serving from uploads directory
-var uploadsPath = Path.Combine(app.Environment.ContentRootPath, "uploads");
+// Enable static file serving from persistent uploads directory
+var uploadsBasePath = app.Configuration["FileUpload:BasePath"] ?? 
+                     Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
+var uploadsPath = Path.Combine(uploadsBasePath, "APinI_Uploads");
+
 if (!Directory.Exists(uploadsPath))
 {
     Directory.CreateDirectory(uploadsPath);

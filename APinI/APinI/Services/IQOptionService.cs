@@ -6,11 +6,7 @@ namespace APinI.Services;
 
 public class IQOptionService : IIQOptionService
 {
-    private readonly PinDataRepository _pinDataRepository;
-    public IQOptionService(PinDataRepository pinDataRepository)
-    {
-        _pinDataRepository = pinDataRepository;
-    }
+    private readonly PinDataRepository _pinDataRepository = new PinDataRepository();
     public void AddCandles(List<IQOptionCandle> candles)
     {
         _pinDataRepository.SaveCandles(candles);

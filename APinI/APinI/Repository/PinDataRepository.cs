@@ -68,7 +68,7 @@ namespace APinI.Repository
         {
             GetData<BaseResponse>("[dbo].[AddIQOptionCandle]", new
             {
-                Candles = candles.ToDataTable()
+                Candle = candles.ToDataTable()
             }).FirstOrDefault();
         }
     }

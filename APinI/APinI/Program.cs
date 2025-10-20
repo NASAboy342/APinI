@@ -19,6 +19,7 @@ builder.Services.AddHostedService<UpdateLocalWebsiteIpAddress>();
 builder.Services.AddSingleton<IHttpClientService, HttpClientService>();
 builder.Services.AddSingleton<IIQOptionService, IQOptionService>();
 builder.Services.AddSingleton<SchedulerHealthCheck>();
+builder.Services.AddSingleton<IIQOptionService, IQOptionService>();
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 builder.Services.AddCors(options =>
 {

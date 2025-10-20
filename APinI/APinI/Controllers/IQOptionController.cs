@@ -14,7 +14,7 @@ public class IQOptionController : ControllerBase
     {
         _iqOptionService = iqOptionService;
     }
-    [HttpPost]
+    [HttpPost("add-candles")]
     public BaseResponse AddCandles([FromBody] AddCandleRequest req)
     {
         try

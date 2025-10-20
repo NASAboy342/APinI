@@ -1,0 +1,26 @@
+using System;
+using APinI.Models;
+using APinI.Repository;
+
+namespace APinI.Services;
+
+public class IQOptionService : IIQOptionService
+{
+    private readonly PinDataRepository _pinDataRepository;
+    public IQOptionService(PinDataRepository pinDataRepository)
+    {
+        _pinDataRepository = pinDataRepository;
+    }
+    public void AddCandles(List<IQOptionCandle> candles)
+    {
+        _pinDataRepository.SaveCandles(candles);
+    }
+
+    public void ValidateCandles(List<IQOptionCandle> candles)
+    {
+        if (candles == null || !candles.Any())
+        {
+            throw new ArgumentException("Candle list cannot be null or empty.");
+        }
+    }
+}

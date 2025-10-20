@@ -1,4 +1,5 @@
 ﻿using APinI.Models;
+using APinI.Helppers;
 using Dapper;
 using System.Data;
 using System.Data.SqlClient;
@@ -60,6 +61,14 @@ namespace APinI.Repository
             GetData<BaseResponse>("[dbo].[SetCurrentIp]",new
             {
                 newIpAddress
+            }).FirstOrDefault();
+        }
+
+        internal void SaveCandles(List<IQOptionCandle> candles)
+        {
+            GetData<BaseResponse>("[dbo].[AddIQOptionCandle]", new
+            {
+                Candles = candles.ToDataTable()
             }).FirstOrDefault();
         }
     }

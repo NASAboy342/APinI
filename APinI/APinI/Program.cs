@@ -18,7 +18,6 @@ builder.Services.AddSingleton<IPowerShellService, PowerShellService>();
 builder.Services.AddSingleton<UpdateLocalWebsiteIpAddress>();
 builder.Services.AddHostedService<UpdateLocalWebsiteIpAddress>();
 builder.Services.AddSingleton<IHttpClientService, HttpClientService>();
-builder.Services.AddSingleton<IIQOptionService, IQOptionService>();
 builder.Services.AddSingleton<SchedulerHealthCheck>();
 builder.Services.AddSingleton<IIQOptionService, IQOptionService>();
 builder.Services.AddSingleton<PinDataRepository>();

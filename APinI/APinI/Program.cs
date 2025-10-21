@@ -1,4 +1,5 @@
 using APinI.BE;
+using APinI.Repository;
 using APinI.Schedular;
 using APinI.Schedular.Jobs;
 using APinI.Services;
@@ -17,8 +18,10 @@ builder.Services.AddSingleton<IPowerShellService, PowerShellService>();
 builder.Services.AddSingleton<UpdateLocalWebsiteIpAddress>();
 builder.Services.AddHostedService<UpdateLocalWebsiteIpAddress>();
 builder.Services.AddSingleton<IHttpClientService, HttpClientService>();
+builder.Services.AddSingleton<IIQOptionService, IQOptionService>();
 builder.Services.AddSingleton<SchedulerHealthCheck>();
-builder.Services.AddHostedService<SchedulerHealthCheck>();
+builder.Services.AddSingleton<IIQOptionService, IQOptionService>();
+builder.Services.AddSingleton<PinDataRepository>();
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 builder.Services.AddCors(options =>
 {

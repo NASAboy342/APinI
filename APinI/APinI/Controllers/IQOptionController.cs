@@ -20,6 +20,7 @@ public class IQOptionController : ControllerBase
         try
         {
             _iqOptionService.ValidateCandles(req.Candles);
+            req.Candles = _iqOptionService.ProcessCandleIds(req.Candles);
             _iqOptionService.AddCandles(req.Candles);
             return new BaseResponse
             {

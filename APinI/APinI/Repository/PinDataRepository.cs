@@ -12,6 +12,7 @@ namespace APinI.Repository
         public PinDataRepository()
         {
             GetConnection = SqlConnection();
+            GetConnection.Open();
         }
         private SqlConnection SqlConnection()
         {

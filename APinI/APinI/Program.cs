@@ -1,4 +1,5 @@
 using APinI.BE;
+using APinI.Repository;
 using APinI.Schedular;
 using APinI.Schedular.Jobs;
 using APinI.Services;
@@ -20,6 +21,7 @@ builder.Services.AddSingleton<IHttpClientService, HttpClientService>();
 builder.Services.AddSingleton<IIQOptionService, IQOptionService>();
 builder.Services.AddSingleton<SchedulerHealthCheck>();
 builder.Services.AddSingleton<IIQOptionService, IQOptionService>();
+builder.Services.AddSingleton<PinDataRepository>();
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 builder.Services.AddCors(options =>
 {

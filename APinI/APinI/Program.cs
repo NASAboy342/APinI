@@ -1,4 +1,6 @@
 using APinI.BE;
+using APinI.Caches.SpendBook;
+using APinI.Filter.SpendBook;
 using APinI.Repository;
 using APinI.Schedular;
 using APinI.Schedular.Jobs;
@@ -21,6 +23,11 @@ builder.Services.AddSingleton<IHttpClientService, HttpClientService>();
 builder.Services.AddSingleton<SchedulerHealthCheck>();
 builder.Services.AddSingleton<IIQOptionService, IQOptionService>();
 builder.Services.AddSingleton<PinDataRepository>();
+builder.Services.AddSingleton<ISpendBookSerivce, SpendBookSerivce>();
+builder.Services.AddSingleton<ISpendBookRepository, SpendBookRepository>();
+builder.Services.AddSingleton<IUserSessionCache, UserSessionCache>();
+builder.Services.AddSingleton<SpendBookExceptionFilter>();
+
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 builder.Services.AddCors(options =>
 {

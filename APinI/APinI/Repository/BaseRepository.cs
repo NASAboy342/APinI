@@ -6,22 +6,24 @@ namespace APinI.Repository
 {
     public abstract class BaseRepository
     {
-        protected readonly IDbConnection GetConnection;
+        private readonly string _connectionString;
 
         protected BaseRepository(string connectionString)
         {
-            GetConnection = new SqlConnection(connectionString);
+            _connectionString = connectionString;
         }
 
         public IEnumerable<T> GetData<T>(string spName)
         {
-            var data = GetConnection.Query<T>(spName, null, null, true, null, CommandType.StoredProcedure);
+            using var connection = new SqlConnection(_connectionString);
+            var data = connection.Query<T>(spName, null, null, true, null, CommandType.StoredProcedure);
             return data;
         }
 
         public IEnumerable<T> GetData<T>(string spName, object param)
         {
-            var data = GetConnection.Query<T>(spName, param, null, true, null, CommandType.StoredProcedure);
+            using var connection = new SqlConnection(_connectionString);
+            var data = connection.Query<T>(spName, param, null, true, null, CommandType.StoredProcedure);
             return data;
         }
     }

@@ -7,6 +7,6 @@
         public decimal Amount { get; set; }
         public string? ReceiptUrl { get; set; }
         public string? Remarks { get; set; }
-        public int? TrackingTopicId { get; set; }
+        public int? TrackingTopicId { get; set; } = 0;
     }
 }

@@ -301,7 +301,7 @@ namespace APinI.Services
             {
                 throw new ArgumentException("Receipt URL is not valid");
             }
-            if(req.TrackingTopicId == 0 || _spendBookRepository.GetPaymentTrackingTopicsByUsername(req.Username).Where(t => t.Id == req.TrackingTopicId).FirstOrDefault() == null)
+            if(req.TrackingTopicId != 0 && _spendBookRepository.GetPaymentTrackingTopicsByUsername(req.Username).Where(t => t.Id == req.TrackingTopicId).FirstOrDefault() == null)
             {
                 throw new ArgumentException("Tracking topic is not found for the user");
             }
@@ -350,7 +350,7 @@ namespace APinI.Services
             {
                 throw new ArgumentException("Receipt URL is not valid");
             }
-            if (req.TrackingTopicId == 0 || _spendBookRepository.GetPaymentTrackingTopicsByUsername(req.Username).Where(t => t.Id == req.TrackingTopicId).FirstOrDefault() == null)
+            if (req.TrackingTopicId != 0 && _spendBookRepository.GetPaymentTrackingTopicsByUsername(req.Username).Where(t => t.Id == req.TrackingTopicId).FirstOrDefault() == null)
             {
                 throw new ArgumentException("Tracking topic is not found for the user");
             }

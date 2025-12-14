@@ -38,9 +38,12 @@ jobs:
       run: |
         Write-Host "Going to project directory..."
         cd "${{ env.projectDir }}"
+        Stop-WebAppPool -Name "apini"
         Write-Host "Current directory: $(Get-Location)"
         Write-Host "Publish application..."
         dotnet publish
         Write-Host "Publish completed successfully!"
         Write-Host "Ready to copy build to deployment directory..."
         Copy-Item -Path "${{ env.publishDir }}/*" -Destination "${{ env.destinationDir }}" -Recurse -Force
+        Start-WebAppPool -Name "apini"
+        Write-Host "Deployment completed successfully!"

@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace APinI.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/[controller]/[action]")]
 public class GitPilot3Controller : ControllerBase
 {
     [HttpGet]

@@ -21,4 +21,16 @@ public class GitPilot3Controller : ControllerBase
             LinuxDownloadUrl = ""
         };
     }
+
+    [HttpGet]
+    public GetClickCountsResponse GetClickCounts()
+    {
+        return new GetClickCountsResponse
+        {
+            MacOsDownloadClickCount = 150,
+            WindowsDownloadClickCount = 100,
+            LinuxDownloadClickCount = 0,
+            SiteVisitCount = 500
+        };
+    }
 }

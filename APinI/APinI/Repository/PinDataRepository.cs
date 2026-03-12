@@ -3,6 +3,7 @@ using APinI.Helppers;
 using Dapper;
 using System.Data;
 using System.Data.SqlClient;
+using APinI.Enums.GitPilot3;
 
 namespace APinI.Repository
 {
@@ -54,6 +55,36 @@ namespace APinI.Repository
             {
                 Candle = candles.ToDataTable()
             }).FirstOrDefault();
+        }
+
+        internal void CountClick(CountClickRequest request)
+        {
+            var script = @"
+                INSERT INTO ClickCount (ClickType, Timestamp, Fingerprint, Site)
+                VALUES (@ClickTypeString, @Timestamp, @Fingerprint, @Site);";
+
+            GetDataByScript<BaseResponse>(script, new
+            {
+                request.ClickTypeString,
+                request.Timestamp,
+                request.Fingerprint,
+                request.Site 
+            });
+        }
+
+        internal int GetClickCounts(string site, EnumGitPilot3ClickType clickType)
+        {
+            var script = @"
+                SELECT COUNT(*) 
+                FROM ClickCount 
+                WHERE Site = @Site AND ClickType = @ClickTypeString;";
+
+            var result = GetDataByScript<int>(script, new
+            {
+                Site = site,
+                ClickTypeString = clickType.ToString()
+            }).FirstOrDefault();
+            return result;
         }
     }
 }

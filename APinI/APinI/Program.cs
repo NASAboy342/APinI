@@ -27,6 +27,7 @@ builder.Services.AddSingleton<ISpendBookSerivce, SpendBookSerivce>();
 builder.Services.AddSingleton<ISpendBookRepository, SpendBookRepository>();
 builder.Services.AddSingleton<IUserSessionCache, UserSessionCache>();
 builder.Services.AddSingleton<SpendBookExceptionFilter>();
+builder.Services.AddSingleton<IClickCountService, ClickCountService>();
 
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 builder.Services.AddCors(options =>

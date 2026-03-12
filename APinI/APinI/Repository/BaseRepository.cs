@@ -26,5 +26,12 @@ namespace APinI.Repository
             var data = connection.Query<T>(spName, param, null, true, null, CommandType.StoredProcedure);
             return data;
         }
+
+        public IEnumerable<T> GetDataByScript<T>(string script, object value)
+        {
+            using var connection = new SqlConnection(_connectionString);
+            var data = connection.Query<T>(script, value, null, true, null, CommandType.Text);
+            return data;
+        }
     }
 }

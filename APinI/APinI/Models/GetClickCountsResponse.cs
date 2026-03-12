@@ -8,4 +8,5 @@ public class GetClickCountsResponse
     public int WindowsDownloadClickCount { get; set; }
     public int LinuxDownloadClickCount { get; set; }
     public int SiteVisitCount { get; set; }
+    public string ErrorMessage { get; set; } = string.Empty;
 }

@@ -20,9 +20,9 @@ public class GitPilot3Controller : ControllerBase
     {
         return new GetLastGitPilot3ReleaseInfoResponse
         {
-            Version = "v1.0.0",
-            ReleaseDate = new DateTime(2026, 3, 2),
-            ReleaseNotes = "GitPilot v1.0.0 is the initial release.",
+            Version = "v1.0.2",
+            ReleaseDate = new DateTime(2026, 3, 18),
+            ReleaseNotes = "GitPilot v1.0.2 is the latest release.",
             MacOsDownloadUrl = "https://github.com/NASAboy342/GitPilot3/releases/download/v1.0.2/GitPilot3.dmg",
             WindowsDownloadUrl = "https://github.com/NASAboy342/GitPilot3/releases/download/v1.0.1/GitPilot3Setup.exe",
             LinuxDownloadUrl = ""

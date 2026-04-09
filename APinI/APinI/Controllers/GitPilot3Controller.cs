@@ -25,7 +25,7 @@ public class GitPilot3Controller : ControllerBase
             ReleaseDate = new DateTime(2026, 4, 9),
             ReleaseNotes = $"GitPilot {version} is the latest release. Add loading indicater. Enhance on performance when sync repo by using multiple threading.",
             MacOsDownloadUrl = "https://github.com/NASAboy342/GitPilot3/releases/download/v1.0.5/GitPilot3.dmg",
-            WindowsDownloadUrl = "https://github.com/NASAboy342/GitPilot3/releases/download/v1.0.1/GitPilot3Setup.exe",
+            WindowsDownloadUrl = "https://github.com/NASAboy342/GitPilot3/releases/download/v1.0.5/GitPilot3Setup.exe",
             LinuxDownloadUrl = ""
         };
     }

@@ -1,5 +1,6 @@
 using APinI.BE;
 using APinI.Caches.SpendBook;
+using APinI.Filter;
 using APinI.Filter.SpendBook;
 using APinI.Repository;
 using APinI.Schedular;
@@ -54,6 +55,10 @@ app.UseHttpsRedirection();
 
 app.UseAuthorization();
 app.UseCors(MyAllowSpecificOrigins);
+// Rate limiting: block any IP that calls an API more than 10 times in a second for 1 day.
+// Placed before MapControllers so it applies to all controller endpoints.
+app.UseMiddleware<RateLimitingMiddleware>();
+
 app.MapControllers();
 app.MapRazorPages();
 app.UseWebSockets();

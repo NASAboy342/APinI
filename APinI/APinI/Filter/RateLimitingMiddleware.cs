@@ -7,8 +7,11 @@ using Newtonsoft.Json;
 namespace APinI.Filter
 {
     /// <summary>
-    /// Blocks any client IP that calls an API more than 10 times within a single second.
-    /// Once the threshold is reached, the IP is blocked for 1 day.
+    /// Blocks any client IP that calls the same API (endpoint) more than
+    /// MaxRequestsPerSecond times within a single second.
+    /// Once the threshold is reached, the IP+endpoint combination is blocked for 1 day.
+    /// The limit is tracked per IP *and* per endpoint (not per IP alone), so the
+    /// same IP can call different endpoints independently without tripping each other.
     /// Apply this middleware to all controllers via Program.cs.
     /// </summary>
     public class RateLimitingMiddleware
@@ -45,17 +48,19 @@ namespace APinI.Filter
         public async Task InvokeAsync(HttpContext context)
         {
             var clientIp = GetClientIp(context);
+            // Key by IP + endpoint so the limit is scoped per endpoint, not per IP alone.
+            var key = GetKey(clientIp, context);
             var now = DateTime.UtcNow;
 
-            // If the IP is currently blocked, short-circuit with 429.
-            if (IsBlocked(clientIp, now))
+            // If the IP+endpoint is currently blocked, short-circuit with 429.
+            if (IsBlocked(key, now))
             {
                 await WriteBlockedResponseAsync(context, clientIp);
                 return;
             }
 
             // Sliding window: drop timestamps older than 1 second and count this request.
-            var timestamps = _requestWindow.GetOrAdd(clientIp, _ => new List<DateTime>());
+            var timestamps = _requestWindow.GetOrAdd(key, _ => new List<DateTime>());
             bool blocked = false;
             lock (timestamps)
             {
@@ -70,8 +75,8 @@ namespace APinI.Filter
 
                 if (timestamps.Count > MaxRequestsPerSecond)
                 {
-                    // Threshold exceeded -> block for 1 day.
-                    _blockUntil[clientIp] = now + BlockDuration;
+                    // Threshold exceeded -> block this IP+endpoint for 1 day.
+                    _blockUntil[key] = now + BlockDuration;
                     blocked = true;
                 }
             }
@@ -142,6 +147,18 @@ namespace APinI.Filter
             }
 
             return "unknown";
+        }
+
+        /// <summary>
+        /// Builds the rate-limit key from the client IP and the requested endpoint,
+        /// so the same IP is tracked independently for each endpoint it calls.
+        /// </summary>
+        private static string GetKey(string clientIp, HttpContext context)
+        {
+            var endpoint = context.Request.Path.HasValue
+                ? context.Request.Path.Value
+                : "/";
+            return $"{clientIp}|{endpoint}";
         }
 
         private static void DoCleanup(object? state)
